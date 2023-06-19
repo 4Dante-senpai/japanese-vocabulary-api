@@ -1,0 +1,26 @@
+version: '3.7'
+name: japanese
+
+services:
+  db:
+    image: postgres
+    #volumes:
+    #  - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/API/dev/Dockerfile
+    volumes:
+      - ./API:/opt/API
+    ports:
+      - 5000:5000
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
