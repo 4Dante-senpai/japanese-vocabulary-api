@@ -1,7 +1,6 @@
 from flask import Flask
 from flask import jsonify
 from db import seed_db
-from db import test_seed
 from db import create_db
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy

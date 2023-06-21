@@ -11,7 +11,12 @@ def create_japanese():
     cur = conn.cursor()
     
     cur.execute("commit")
-    #cur.execute("create database japanese")
-    cur.execute("SELECT 'CREATE DATABASE japanese' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'japanese')")
+    cur.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = 'japanese'")
+    exists = cur.fetchone()
+    if not exists:
+        cur.execute('CREATE DATABASE japanese')
+    else:
+        print(f"Database 'japanese' alredy exist")
+    cur.execute("commit")
     cur.close()
     conn.close()
