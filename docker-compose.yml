@@ -14,12 +14,14 @@ services:
     build:
       context: .
       dockerfile: ./docker/API/dev/Dockerfile
+
     volumes:
       - ./API:/opt/API
     ports:
       - 5000:5000
     environment:
-      - POSTGRES_NAME=postgres
+      - POSTGRES_HOST=japanese-db-1
+      - POSTGRES_DB=japanese
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     depends_on:
