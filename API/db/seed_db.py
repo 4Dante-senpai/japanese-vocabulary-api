@@ -1,6 +1,8 @@
 import pandas as pd
 from io import BytesIO
 import requests
+from sqlalchemy.types import Integer
+from .utils import alter_tables
 
 def seed(db, app):
     sheet_id = "1_fjQaRAUUzwDe6iagQKxyK_uGeyJhvLyzpOWEO6fPAY"
@@ -21,17 +23,18 @@ def seed(db, app):
         req = requests.get(url)
         data = req.content
         df_local = pd.read_csv(BytesIO(data), encoding='utf-8', index_col=False)
-        df_local['category_id'] = list(categories.keys())[list(categories.values()).index(category)]
+        df_local['category'] = category
         list_df.append(df_local)
 
     df_final = pd.concat(list_df, ignore_index=True)
 
     with app.app_context():
         try:
-            engine = db.get_engine()
-            #This create a table with "bigInt" and "text"
-            #Maybe I can use the model without lose performance with pandas
-            df_final.to_sql('words', engine.connect())
-            df_categories.to_sql('categories', engine.connect())
+            engine = db.engine
+            df_final.to_sql('words', engine.connect(), index_label='id', dtype={'id': Integer()})
+            df_categories.to_sql('categories', engine.connect(), index_label='id', dtype={'id': Integer()})
+
+            #Workaround to SQLAlchemy ALTER
+            alter_tables.set_pk({'words': 'id' ,'categories': 'category'})
         except Exception as e:
             print(e)
