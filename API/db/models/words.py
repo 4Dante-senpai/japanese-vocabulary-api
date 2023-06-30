@@ -1,7 +1,5 @@
 import sqlalchemy as sa
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from ..db import db
 
 class Words(db.Model):
     id = sa.Column(db.Integer, primary_key=True)
@@ -15,3 +13,15 @@ class Words(db.Model):
 
     def __repr__(self):
         return f'<Words {self.pronunciation} {self.english}>'
+    
+    def to_dict(self):
+        word = {}
+        word['id'] = self.id
+        word['kanji'] = self.kanji
+        word['phonetics'] = self.phonetics
+        word['pronunciation'] = self.pronunciation
+        word['english'] = self.english
+        word['spanish'] = self.spanish
+        word['category'] = self.category
+        word['is_katakana'] = True if self.is_katakana == 1 else False 
+        return word

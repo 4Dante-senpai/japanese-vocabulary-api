@@ -3,6 +3,7 @@ from io import BytesIO
 import requests
 from sqlalchemy.types import Integer
 from .utils import alter_tables
+import os
 
 def seed(db, app):
     sheet_id = "1_fjQaRAUUzwDe6iagQKxyK_uGeyJhvLyzpOWEO6fPAY"
@@ -18,6 +19,7 @@ def seed(db, app):
     categories = df_categories.to_dict().get('category')
 
     list_df = []
+    list_cats = []
     for category in categories.values():
         url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={category}"
         req = requests.get(url)
@@ -25,6 +27,8 @@ def seed(db, app):
         df_local = pd.read_csv(BytesIO(data), encoding='utf-8', index_col=False)
         df_local['category'] = category
         list_df.append(df_local)
+        list_cats.append(category)
+    os.environ["WORDS_CATEGORIES"] = str("|".join(list_cats))
 
     df_final = pd.concat(list_df, ignore_index=True)
 
@@ -36,5 +40,6 @@ def seed(db, app):
 
             #Workaround to SQLAlchemy ALTER
             alter_tables.set_pk({'words': 'id' ,'categories': 'category'})
+            
         except Exception as e:
             print(e)
