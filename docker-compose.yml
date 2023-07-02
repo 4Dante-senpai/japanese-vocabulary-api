@@ -14,7 +14,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/API/dev/Dockerfile
-
     volumes:
       - ./API:/opt/API
     ports:
@@ -26,3 +25,11 @@ services:
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/dev/Dockerfile
+    restart: unless-stopped
+    ports:
+      - 80:8080
