@@ -3,8 +3,6 @@ from db.models.Words import Words
 from db.utils.helpers_db import generate_metadata
 from  sqlalchemy.sql.expression import func 
 
-# select.order_by(func.random()) # for PostgreSQL, SQLite
-
 def random_word():
     page = db.paginate(db.select(Words).order_by(func.random()), per_page=5)
 

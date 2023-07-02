@@ -2,6 +2,7 @@ from db.db import db
 from db.models.Words import Words
 from db.models.Categories import Categories
 from db.utils.helpers_db import generate_metadata
+from sqlalchemy.sql.expression import func 
 
 def all_categories():
     page = db.paginate(db.select(Categories), per_page=500)
@@ -70,4 +71,17 @@ def get_all_kanji_from_category(category, p):
         words.append(word.to_dict())
 
     return ({'data': words, 'metadata': meta})
+
+def get_random_from_category(category):
+    page = db.paginate(db.select(Words).where(Words.category == category).order_by(func.random()), per_page=5)
+
+    if page.page > page.pages:
+        return (404)
+
+    words = []
+    for word in page.items:
+        words.append(word.to_dict())
+
+    return({'words' : words})
+
 

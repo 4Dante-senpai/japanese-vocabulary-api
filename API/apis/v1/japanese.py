@@ -166,4 +166,18 @@ class Categories(Resource):
             return jsonify(response)
         else:
             return abort(404, 'Category dosent exist')
+        
+@api.route('/words/<string:category>/random')
+class Categories(Resource):
+    '''Return five random words from one category'''
+    @api.doc('Return five random words from one category', model=api_models.words)
+    def get(self, category):
+        '''Return five random words from one category'''
+        if validate_category(category):
+            response = categories_service.get_random_from_category(category)
+            if response == 404:
+                return abort(404, 'Page not found or out of range. Try without any parameter to see how many pages there are.')
+            return jsonify(response)
+        else:
+            return abort(404, 'Category dosent exist')
 
