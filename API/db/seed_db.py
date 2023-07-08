@@ -35,8 +35,9 @@ def seed(db, app):
     with app.app_context():
         try:
             engine = db.engine
-            df_final.to_sql('words', engine.connect(), index_label='id', dtype={'id': Integer()})
-            df_categories.to_sql('categories', engine.connect(), index_label='id', dtype={'id': Integer()})
+
+            df_final.to_sql('words', engine.connect(), index_label='id', dtype={'id': Integer()}, if_exists='replace')
+            df_categories.to_sql('categories', engine.connect(), index_label='id', dtype={'id': Integer()}, if_exists='replace')
 
             #Workaround to SQLAlchemy ALTER
             alter_tables.set_pk({'words': 'id' ,'categories': 'category'})
