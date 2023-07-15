@@ -1,0 +1,50 @@
+version: '3.7'
+name: japanese
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d japanese'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/API/prod/Dockerfile
+    volumes:
+      - ./API:/opt/API
+    environment:
+      - POSTGRES_HOST=japanese-db-1
+      - POSTGRES_DB=japanese
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: curl --fail http://api:5000/healthy || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/dev/Dockerfile
+    restart: unless-stopped
+    ports:
+      - 80:8080
+    depends_on:
+      api: 
+        condition: service_healthy
+
