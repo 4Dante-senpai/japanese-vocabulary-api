@@ -6,6 +6,7 @@ import os
 from apis.v1.japanese import api as jap_ns
 from apis.v1.api_models import root_ns as models
 from db.db import db
+from flask_cors import CORS
 from time import sleep
 
 load_dotenv()
@@ -31,6 +32,7 @@ def create_app():
 
 
 app = create_app()
+CORS(app)
 
 api = Api(app, version='1.0', title='Japanese Vocabulary API', 
                 description='A simple japanese vocabulary API')
