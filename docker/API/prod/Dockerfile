@@ -1,7 +1,6 @@
-FROM python:3.10
+FROM python:3.10-slim
 
-RUN apt-get update
-
+RUN apt-get update && apt-get -y install libpq-dev gcc curl
 
 WORKDIR /opt/API
 
@@ -11,4 +10,4 @@ RUN pip install -r requeriments.txt
 
 COPY ./API .
 
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "main:app"]
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "--timeout", "600", "main:app"]
