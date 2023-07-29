@@ -84,4 +84,42 @@ def get_random_from_category(category):
 
     return({'words' : words})
 
+# _____
+
+def get_kanji_random_from_category(category):
+    page = db.paginate(db.select(Words).where((Words.category == category) & (Words.kanji != None)).order_by(func.random()), per_page=5)
+
+    if page.page > page.pages:
+        return (404)
+
+    words = []
+    for word in page.items:
+        words.append(word.to_dict())
+
+    return({'words' : words})
+
+def get_higarana_random_from_category(category):
+    page = db.paginate(db.select(Words).where((Words.category == category) & (Words.is_katakana == 0)).order_by(func.random()), per_page=5)
+
+    if page.page > page.pages:
+        return (404)
+
+    words = []
+    for word in page.items:
+        words.append(word.to_dict())
+
+    return({'words' : words})
+
+def get_katakana_random_from_category(category):
+    page = db.paginate(db.select(Words).where((Words.category == category) & (Words.is_katakana == 1)).order_by(func.random()), per_page=5)
+
+    if page.page > page.pages:
+        return (404)
+
+    words = []
+    for word in page.items:
+        words.append(word.to_dict())
+
+    return({'words' : words})
+
 

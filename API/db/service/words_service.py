@@ -82,3 +82,39 @@ def specific_word(id):
     
     for word in word_page.items:
         return (word.to_dict())
+    
+def get_kanji_random():
+    page = db.paginate(db.select(Words).where(Words.kanji != None).order_by(func.random()), per_page=5)
+
+    if page.page > page.pages:
+        return (404)
+
+    words = []
+    for word in page.items:
+        words.append(word.to_dict())
+
+    return({'words' : words})
+
+def get_higarana_random():
+    page = db.paginate(db.select(Words).where(Words.is_katakana == 0).order_by(func.random()), per_page=5)
+
+    if page.page > page.pages:
+        return (404)
+
+    words = []
+    for word in page.items:
+        words.append(word.to_dict())
+
+    return({'words' : words})
+
+def get_katakana_random():
+    page = db.paginate(db.select(Words).where(Words.is_katakana == 1).order_by(func.random()), per_page=5)
+
+    if page.page > page.pages:
+        return (404)
+
+    words = []
+    for word in page.items:
+        words.append(word.to_dict())
+
+    return({'words' : words})

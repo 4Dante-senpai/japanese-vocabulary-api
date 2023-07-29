@@ -167,17 +167,101 @@ class Categories(Resource):
         else:
             return abort(404, 'Category dosent exist')
         
+@api.route('/words/kanji/<string:category>/random')
+class Categories(Resource):
+    '''Return five random words in kanji from one category'''
+    @api.doc('Return five random words in kanji from one category', model=api_models.words)
+    @api.doc(responses={404: 'Nothing found in this category.'})
+    def get(self, category):
+        '''Return five random words in kanji from one category'''
+        if validate_category(category):
+            response = categories_service.get_kanji_random_from_category(category)
+            if response == 404:
+                return abort(404, 'Nothing found in this category.')
+            return jsonify(response)
+        else:
+            return abort(404, 'Category dosent exist')
+        
+@api.route('/words/hiragana/<string:category>/random')
+class Categories(Resource):
+    '''Return five random words in hiragana from one category'''
+    @api.doc('Return five random words in hiragana from one category', model=api_models.words)
+    @api.doc(responses={404: 'Nothing found in this category.'})
+    def get(self, category):
+        '''Return five random words in hiragana from one category'''
+        if validate_category(category):
+            response = categories_service.get_higarana_random_from_category(category)
+            if response == 404:
+                return abort(404, 'Nothing found in this category.')
+            return jsonify(response)
+        else:
+            return abort(404, 'Category dosent exist')
+        
+@api.route('/words/katakana/<string:category>/random')
+class Categories(Resource):
+    '''Return five random words in katakana from one category'''
+    @api.doc('Return five random words in katakana from one category', model=api_models.words)
+    @api.doc(responses={404: 'Nothing found in this category.'})
+    def get(self, category):
+        '''Return five random words in katakana from one category'''
+        if validate_category(category):
+            response = categories_service.get_katakana_random_from_category(category)
+            if response == 404:
+                return abort(404, 'Nothing found in this category.')
+            return jsonify(response)
+        else:
+            return abort(404, 'Category dosent exist')
+        
 @api.route('/words/<string:category>/random')
 class Categories(Resource):
     '''Return five random words from one category'''
     @api.doc('Return five random words from one category', model=api_models.words)
+    @api.doc(responses={404: 'Nothing found in this category.'})
     def get(self, category):
         '''Return five random words from one category'''
         if validate_category(category):
             response = categories_service.get_random_from_category(category)
             if response == 404:
-                return abort(404, 'Page not found or out of range. Try without any parameter to see how many pages there are.')
+                return abort(404, 'Nothing found in this category.')
             return jsonify(response)
         else:
             return abort(404, 'Category dosent exist')
+        
+@api.route('/words/kanji/random')
+class Categories(Resource):
+    '''Return five random words in kanji'''
+    @api.doc('Return five random words in kanji', model=api_models.words)
+    @api.doc(responses={404: 'Nothing found.'})
+    def get(self):
+        '''Return five random words in kanji'''
+        response = words_service.get_kanji_random()
+        if response == 404:
+            return abort(404, 'Nothing found.')
+        return jsonify(response)
+    
+@api.route('/words/hiragana/random')
+class Categories(Resource):
+    '''Return five random words in hiragana'''
+    @api.doc('Return five random words in hiragana', model=api_models.words)
+    @api.doc(responses={404: 'Nothing found.'})
+    def get(self):
+        '''Return five random words in hiragana'''
+        response = words_service.get_higarana_random()
+        if response == 404:
+            return abort(404, 'Nothing found.')
+        return jsonify(response)
+    
+@api.route('/words/katakana/random')
+class Categories(Resource):
+    '''Return five random words in katakana'''
+    @api.doc('Return five random words in katakana', model=api_models.words)
+    @api.doc(responses={404: 'Nothing found.'})
+    def get(self):
+        '''Return five random words in katakana'''
+        response = words_service.get_katakana_random()
+        if response == 404:
+            return abort(404, 'Nothing found.')
+        return jsonify(response)
+
+        
 
