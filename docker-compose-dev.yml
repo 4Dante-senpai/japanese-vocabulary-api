@@ -19,12 +19,13 @@ services:
   api:
     build:
       context: .
-      dockerfile: ./docker/API/prod/Dockerfile
+      dockerfile: ./docker/API/dev/Dockerfile
     volumes:
       - ./API:/opt/API
     environment:
       - POSTGRES_HOST=japanese-db-1
       - POSTGRES_DB=japanese
+      - POSTGRES_DB_TEST=japanese_tests
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     depends_on:
@@ -40,7 +41,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: ./docker/nginx/prod/Dockerfile
+      dockerfile: ./docker/nginx/dev/Dockerfile
     restart: unless-stopped
     ports:
       - 80:8080
