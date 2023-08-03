@@ -7,21 +7,12 @@ from apis.v1.japanese import api as jap_ns
 from apis.v1.api_models import root_ns as models
 from db.db import db
 from flask_cors import CORS
-from time import sleep
 
 load_dotenv()
 
 def create_db(app):
-    while True:
-        try:
-            db.init_app(app)    
-            seed_db.seed(db,app)
-            print(os.environ)
-            break
-        except Exception as e:
-            sleep(20)
-            print(e)
-            print('Triying again in 20 seconds')
+    db.init_app(app)    
+    seed_db.seed(db,app)
 
 def create_app():
     app = Flask(__name__)
@@ -34,8 +25,23 @@ def create_app():
 app = create_app()
 CORS(app)
 
-api = Api(app, version='1.0', title='Japanese Vocabulary API', 
-                description='A simple japanese vocabulary API')
+api = Api(app, version='1.0.0', title='Japanese Vocabulary API', 
+                description='This is a simple API for japanese vocabulary. There are categories, words and alphabets. Each word have a category and is writen in one alphabets. \
+                But in the case of one word is writen in kanji, the word also have his phonetic writen in hiragana. \
+                For example: 魚 is the kanji for "Fish", and his phonetic is さかな.    -    \
+                If you wanna contribute with vocabulary or with code, please visit the github repository',
+
+
+
+                contact='Demian Daniel Durán',
+                contact_url='https://www.linkedin.com/in/durandemiandaniel/',
+                contact_email='demi.4d@gmail.com',
+                
+
+                
+                license='Repository: https://github.com/4Dante-senpai/japanese-vocabulary-api',
+                terms_url='https://github.com/4Dante-senpai/japanese-vocabulary-api',
+                )
 
 api.add_namespace(models)
 api.add_namespace(jap_ns)
@@ -46,4 +52,5 @@ def Home():
     return response
 
 if __name__ == '__main__':
+    print(os.environ)
     app.run(debug=True, host="0.0.0.0")
