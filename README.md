@@ -1,6 +1,12 @@
 
 # Japanese vocabulary API
 
+[![License Badge](https://img.shields.io/github/license/4Dante-senpai/proyecto-japones)](https://github.com/4Dante-senpai/proyecto-japones/blob/main/LICENSE)
+[![Issues Badge](https://img.shields.io/github/issues/4Dante-senpai/proyecto-japones)](https://github.com/4Dante-senpai/proyecto-japones/issues)
+[![Pull Requests Badge](https://img.shields.io/github/issues-pr/4Dante-senpai/proyecto-japones)](https://github.com/4Dante-senpai/proyecto-japones/pulls)
+[![Contributors Badge](https://img.shields.io/github/contributors/4Dante-senpai/proyecto-japones)](https://github.com/4Dante-senpai/proyecto-japones/graphs/contributors)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+
 This is the source code from the http://japanese-vocabulary-api.com.ar/
 
 This API provides easy and fast access to a variety of japanese vocabulary writen in his three alphabets (kanji, hiragana and Katana) and also every word have a cateogry.
