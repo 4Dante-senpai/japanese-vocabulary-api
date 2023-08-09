@@ -28,7 +28,6 @@ def seed(db, app):
         df_local['category'] = category
         list_df.append(df_local)
         list_cats.append(category)
-    os.environ["WORDS_CATEGORIES"] = str("|".join(list_cats))
 
     df_final = pd.concat(list_df, ignore_index=True)
 

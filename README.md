@@ -39,9 +39,11 @@ I also made a small chrome extensión using this app.
 
 ## Known issues
 
-- Sometimes the DB seeder does not work properly
+- ~~Sometimes the DB seeder does not work properly.~~
 
-- The categories are only in spanish, need to be in English also.
+- ~~The categories are only in spanish, need to be in English also.~~
+
+
 ## Support
 
 If you wanna contribute with vocabulary my email is demi.4d@gmail.com
