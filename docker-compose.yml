@@ -12,9 +12,10 @@ services:
       - POSTGRES_PASSWORD=postgres
     healthcheck:
       test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d japanese'"]
-      interval: 10s
+      interval: 60s
       timeout: 5s
       retries: 5
+      start_period: 30s
 
   api:
     build:
@@ -32,7 +33,7 @@ services:
         condition: service_healthy
     healthcheck:
       test: curl --fail http://api:5000/healthy || exit 1
-      interval: 30s
+      interval: 1m30s
       timeout: 10s
       retries: 5
       start_period: 30s
