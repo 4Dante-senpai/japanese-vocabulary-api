@@ -1,5 +1,3 @@
-import os
-
 def generate_metadata(page):
     
     meta = {
@@ -14,12 +12,3 @@ def generate_metadata(page):
     }
 
     return meta
-
-
-
-def validate_category(category):
-    categories = os.environ['WORDS_CATEGORIES']
-    if category in categories:
-        return True
-    else:
-        return False
