@@ -25,7 +25,7 @@ def create_app():
 app = create_app()
 CORS(app)
 
-api = Api(app, version='1.1.0', title='Japanese Vocabulary API', 
+api = Api(app, version='1.2.0', title='Japanese Vocabulary API', 
                 description='This is a simple API for japanese vocabulary. There are categories, words and alphabets. Each word have a category and is writen in one alphabets. \
                 But in the case of one word is writen in kanji, the word also have his phonetic writen in hiragana. \
                 For example: 魚 is the kanji for "Fish", and his phonetic is さかな.    -    \
