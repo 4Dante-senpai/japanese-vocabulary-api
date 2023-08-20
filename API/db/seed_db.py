@@ -17,17 +17,21 @@ def seed(db, app):
     df_categories = df_categories.drop(config_index, axis=0)
 
     categories = df_categories.to_dict().get('category')
+    categories_spanish = df_categories.to_dict().get('spanish')
 
     list_df = []
-    list_cats = []
+    categories_spanish_index = 0
+
     for category in categories.values():
         url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={category}"
         req = requests.get(url)
         data = req.content
         df_local = pd.read_csv(BytesIO(data), encoding='utf-8', index_col=False)
         df_local['category'] = category
+        df_local['category_spanish'] = list(categories_spanish.values())[categories_spanish_index]
         list_df.append(df_local)
-        list_cats.append(category)
+        categories_spanish_index += 1
+
 
     df_final = pd.concat(list_df, ignore_index=True)
 
@@ -36,6 +40,7 @@ def seed(db, app):
             engine = db.engine
             df_final.to_sql('words', engine.connect(), index_label='id', dtype={'id': Integer()}, if_exists="replace")
             df_categories.to_sql('categories', engine.connect(), index_label='id', dtype={'id': Integer()}, if_exists="replace")
+
 
             #Workaround to SQLAlchemy ALTER
             alter_tables.set_pk({'words': 'id' ,'categories': 'category'})

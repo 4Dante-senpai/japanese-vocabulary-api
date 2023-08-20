@@ -12,7 +12,8 @@ word = root_ns.model('Word', {
     'english': fields.String,
     'spanish': fields.String,
     'is_katakana': fields.Boolean(default=False),
-    'category': fields.Integer
+    'category': fields.String,
+    'category_spanish': fields.String
 })
 
 words = root_ns.model('Words', {

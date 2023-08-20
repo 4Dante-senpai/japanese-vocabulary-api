@@ -5,6 +5,7 @@ class Words(db.Model):
     id = sa.Column(db.Integer, primary_key=True)
     kanji = sa.Column(db.String(64))
     phonetics = sa.Column(db.String(64))
+    category_spanish = sa.Column(db.String(5))
     pronunciation = sa.Column(db.String(64))
     english = sa.Column(db.String(64))
     spanish = sa.Column(db.String(64))
@@ -23,5 +24,6 @@ class Words(db.Model):
         word['english'] = self.english
         word['spanish'] = self.spanish
         word['category'] = self.category
+        word['category_spanish'] = self.category_spanish
         word['is_katakana'] = True if self.is_katakana == 1 else False 
         return word
