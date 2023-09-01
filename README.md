@@ -34,6 +34,14 @@ I also made a small chrome extensión using this app.
 
 - Add SSL
 
+- Refactoring some main code
+
+- Implement CLI
+
+- Implement pytest
+
+- Full CI / CD integration
+
 - ???
 
 
