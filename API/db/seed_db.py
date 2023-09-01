@@ -32,7 +32,6 @@ def seed(db, app):
         list_df.append(df_local)
         categories_spanish_index += 1
 
-
     df_final = pd.concat(list_df, ignore_index=True)
 
     with app.app_context():
